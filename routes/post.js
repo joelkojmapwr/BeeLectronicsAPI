@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 
+router.post("/users", (req, res) => {
+
+  const { userName, passwordHash, email, firstName, lastName} = req.body;
+  const sql = "INSERT INTO users (userName, passwordHash, email, firstName, lastName) VALUES (?, ?, ?, ?, ?)";
+  /*db.query(sql, [userName, passwordHash, email, firstName, lastName], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: "User added successfully", userId: result.insertId });
+  });*/
+  res.status(201).json({ message: "User added successfully", userId: 1 });
+});
+
+
+
+/*
 // 1. Add a new hive
 router.post("/hives", (req, res) => {
     const { name, location } = req.body;
@@ -26,5 +42,5 @@ router.post("/hives/:id/data", (req, res) => {
       res.status(201).json({ message: "Data added successfully", dataId: result.insertId });
     });
   });
-  
+*/
 module.exports = router;

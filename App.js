@@ -27,9 +27,10 @@ db.connect((err) => {
 // API Endpoints
 
 //const getRouter = require("./routes/get");
-const randomRouter = require("./routes/random");
-app.use(randomRouter);
-
+const postRouter = require("./routes/post");
+const getRouter = require("./routes/get");
+app.use(getRouter);
+app.use(postRouter);
 
 
 // Start the server

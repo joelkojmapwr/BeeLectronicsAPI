@@ -2,7 +2,7 @@ const express = require("express");
 const { route } = require("./post");
 const router = express.Router();
 
-
+/*
 // 2. Get all hives
 router.get("/hives", (req, res) => {
     const sql = "SELECT * FROM hives";
@@ -26,6 +26,11 @@ router.get("/hives/:id/data", (req, res) => {
       }
       res.status(200).json(results);
     });
+  });
+*/
+
+router.get("/users", (req, res) => {
+    res.status(200).json({ message: "Hello, World!" });
   });
 
 module.exports = router;
