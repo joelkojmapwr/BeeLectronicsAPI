@@ -1,6 +1,50 @@
 const express = require("express");
-const { route } = require("./post");
 const router = express.Router();
+const db = require("../db/db.js");
+
+
+router.get("/hives", (req, res) => {
+  const { ownerId } = req.query;
+  const sql = "SELECT * FROM BeeHives WHERE owner_id = ?";
+  db.query(sql, [ownerId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+});
+
+router.get("/hives/:beeViceId/sensorReads", (req, res) => {
+  const { beeViceId } = req.params;
+  const sql = "SELECT * FROM SensorReads WHERE beeViceId = ?";
+  db.query(sql, [beeViceId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+});
+
+router.get("/hives/:beeViceId/beeViceLogs", (req, res) => {
+  const { beeViceId } = req.params;
+  const sql = "SELECT * FROM BeeViceLogs WHERE beeViceId = ?";
+  db.query(sql, [beeViceId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+});
+
+router.get("/sensorTypes", (req, res) => {
+  const sql = "SELECT * FROM Sensors";
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+});
 
 /*
 // 2. Get all hives
@@ -28,9 +72,5 @@ router.get("/hives/:id/data", (req, res) => {
     });
   });
 */
-
-router.get("/users", (req, res) => {
-    res.status(200).json({ message: "Hello, World!" });
-  });
 
 module.exports = router;

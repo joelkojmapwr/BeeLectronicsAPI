@@ -1,15 +1,40 @@
-POST http://localhost:3000/users HTTP/1.1
+POST http://localhost:3000/newUser HTTP/1.1
 Content-Type: application/json
 
 {
     "userName": "Joel",
-    "passwordHash": "1234",
+    "password": "1234",
     "email": "joel@gmail.com",
     "firstName": "Joel",
     "lastName": "Gonzalez"
 }
 
+POST http://localhost:3000/beeVice HTTP/1.1
+Content-Type: application/json
 
-GET http://localhost:3000/users HTTP/1.1
+{
+    "ownerId": "1",
+    "serialNumber": "1234"
+}
 
-GET https://swapi.dev/api/people/1
+POST http://localhost:3000/sensorReads HTTP/1.1
+Content-Type: application/json
+
+{
+    "beeViceId": "1",
+    "sensorType": "1",
+    "value": "29.5"
+}
+
+POST http://localhost:3000/beeViceLogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "beeViceId": "1",
+    "batteryLevel": "60.2",
+    "additionalMessage": "Test__ BeeVice is online"
+}
+
+
+
+GET http://localhost:3000/sensorTypes HTTP/1.1
