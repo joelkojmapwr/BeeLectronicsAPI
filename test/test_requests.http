@@ -1,10 +1,10 @@
-POST http://localhost:3000/newUser HTTP/1.1
+POST http://srv77343.seohost.com.pl/newUser HTTP/1.1
 Content-Type: application/json
 
 {
-    "userName": "Joel",
+    "userName": "Sara",
     "password": "1234",
-    "email": "joel@gmail.com",
+    "email": "sara@gmail.com",
     "firstName": "Joel",
     "lastName": "Gonzalez"
 }
@@ -35,6 +35,21 @@ Content-Type: application/json
     "additionalMessage": "Test__ BeeVice is online"
 }
 
-
-
 GET http://localhost:3000/sensorTypes HTTP/1.1
+
+GET srv77343.seohost.com.pl/sensorTypes HTTP/1.1
+
+
+
+POST srv77343.seohost.com.pl/beeViceLogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "beeViceId": "1",
+    "batteryLevel": "60.2",
+    "additionalMessage": "Test__ BeeVice is online"
+}
+
+GET srv77343.seohost.com.pl/hives/1/sensorReads HTTP/1.1
+Content-Type: application/json
+
