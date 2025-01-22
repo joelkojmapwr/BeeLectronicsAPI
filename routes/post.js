@@ -119,4 +119,15 @@ router.post("/beeViceLogs", (req, res) => {
 });
 
 
+router.post("/newCommand", (req, res) => {
+  const { beeViceId, commandId, params } = req.body;
+  const sql = "INSERT INTO Commands (beeViceId, commandId, params) VALUES (?, ?, ?)";
+  db.query(sql, [beeViceId, commandId, params], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: "Command added successfully", commandId: result.insertId });
+  });
+});
+
 module.exports = router;

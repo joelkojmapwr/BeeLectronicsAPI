@@ -66,9 +66,23 @@ CREATE OR REPLACE TABLE queuedCommands (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     beeViceId INT NOT NULL,
     commandId INT NOT NULL,
-    params JSON
-)
+    params JSON,
+    executed BOOLEAN DEFAULT FALSE,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
+    CONSTRAINT beeViceIdQueuedCommands FOREIGN KEY (beeViceId) REFERENCES BeeVice(id),
+    CONSTRAINT commandIdQueuedCommands FOREIGN KEY (commandId) REFERENCES Commands(id)
+);
+
+CREATE OR REPLACE TABLE Commands (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    command VARCHAR(50) NOT NULL,
+    possibleParams JSON
+);
+
+INSERT INTO Commands (command, possibleParams) VALUES 
+('WIFI_CHANGE', '{"ssid": "string", "password": "string"}'),
+('WAKEUP_CHANGE', '{"wakeUpTimes": "int[] - in seconds"}');
 -- INSERTS
 INSERT INTO Sensors (type) VALUES 
 ('Temp'),
