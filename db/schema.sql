@@ -8,7 +8,9 @@ CREATE OR REPLACE TABLE Users (
     userName VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     passwordHash VARCHAR(255) NOT NULL, -- this will be tha hash of the password
-    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT passwordHash CHECK (LENGTH(passwordHash) = 60)
 );
 
 CREATE OR REPLACE TABLE BeeVice (

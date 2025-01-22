@@ -25,6 +25,7 @@ router.post("/newUser", (req, res) => {
   const { userName, password, email, firstName, lastName} = req.body;
   console.log(password);
   const passwordHash = hashPassword(password);
+  console.log(passwordHash);
   const sql = "INSERT INTO Users (userName, passwordHash, email, firstName, lastName) VALUES (?, ?, ?, ?, ?)";
 
   db.query(sql, [userName, passwordHash, email, firstName, lastName], (err, result) => {
@@ -33,6 +34,25 @@ router.post("/newUser", (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     res.status(201).json({ message: "User Created successfully", userId: result.insertId });
+  });
+});
+
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT passwordHash FROM Users WHERE email = ?";
+  db.query(sql, [email], async (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (result.length === 0) {
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    const user = result[0];
+    const passwordMatch = await verifyPassword(password, user.passwordHash);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    res.status(200).json({ message: "Login successful", userId: user.userId });
   });
 });
 

@@ -62,3 +62,12 @@ Content-Type: application/json
     "queenColor": "white",
     "breed": "Italian"
 }
+
+POST srv77343.seohost.com.pl/beeHives HTTP/1.1
+Content-Type: application/json
+
+{
+    "ownerId": "1",
+    "queenColor": "red",
+    "breed": "Italian"
+}
