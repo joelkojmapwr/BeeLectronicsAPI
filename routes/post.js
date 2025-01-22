@@ -50,7 +50,7 @@ router.post("/beevice", (req, res) => {
 
 router.post("/beehives", (req, res) => {
   const { ownerId, beeViceId, queenColor, breed, location } = req.body;
-  const sql = "INSERT INTO BeeHives (owner_id, beevice_id, queen_color, breed, location) VALUES (?, ?, ?, ?, ?)";
+  const sql = "INSERT INTO Hives (owner_id, beevice_id, queen_color, breed, location) VALUES (?, ?, ?, ?, ?)";
   db.query(sql, [ownerId, beeViceId, queenColor, breed, location], (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });

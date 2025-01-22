@@ -23,7 +23,7 @@ CREATE OR REPLACE TABLE BeeVice (
 CREATE OR REPLACE TABLE Hives (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     ownerId INT NOT NULL,
-    beeViceId INT NOT NULL,
+    beeViceId INT,
     queenColor ENUM('white', 'yellow', 'red', 'green', 'blue'),
     breed VARCHAR(100),
     location VARCHAR(100),
@@ -60,6 +60,12 @@ CREATE OR REPLACE TABLE BeeViceLogs (
     CONSTRAINT beeViceIdBeeViceLogs FOREIGN KEY (beeViceId) REFERENCES BeeVice(id)
 );
 
+CREATE OR REPLACE TABLE queuedCommands (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    beeViceId INT NOT NULL,
+    commandId INT NOT NULL,
+    params JSON
+)
 
 -- INSERTS
 INSERT INTO Sensors (type) VALUES 

@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "userName": "Sara",
     "password": "1234",
-    "email": "sara@gmail.com",
+    "email": "sar2a@gmail.com",
     "firstName": "Joel",
     "lastName": "Gonzalez"
 }
@@ -53,3 +53,12 @@ Content-Type: application/json
 GET srv77343.seohost.com.pl/hives/1/sensorReads HTTP/1.1
 Content-Type: application/json
 
+POST srv77343.seohost.com.pl/beeHives HTTP/1.1
+Content-Type: application/json
+
+{
+    "ownerId": "1",
+    "beeViceId": "1",
+    "queenColor": "white",
+    "breed": "Italian"
+}
