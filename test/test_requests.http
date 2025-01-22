@@ -79,3 +79,15 @@ Content-Type: application/json
     "password": "1234",
     "email": "sara@gmail.com"
 }
+
+POST http://srv77343.seohost.com.pl/newCommand HTTP/1.1
+Content-Type: application/json
+
+{
+    "beeViceId": "1",
+    "commandId": "1",
+    "params": {
+        "ssid": "myWifi",
+        "password": "myPassword"
+    }
+}
