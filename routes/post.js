@@ -122,7 +122,7 @@ router.post("/beeViceLogs", (req, res) => {
 router.post("/newCommand", (req, res) => {
   const { beeViceId, commandId } = req.body;
   const params = JSON.stringify(req.body.params);
-  const sql = "INSERT INTO Commands (beeViceId, commandId, params) VALUES (?, ?, ?)";
+  const sql = "INSERT INTO queuedCommands (beeViceId, commandId, params) VALUES (?, ?, ?)";
   db.query(sql, [beeViceId, commandId, params], (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
