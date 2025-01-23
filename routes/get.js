@@ -56,5 +56,23 @@ router.get("/sensorTypes", (req, res) => {
   });
 });
 
+router.get("/inspections/:hiveId", (req, res) => {
+  const { hiveId } = req.params;
+  const { startDate, endDate } = req.query;
+  let sql = "SELECT * FROM Inspections WHERE hiveId = ?";
+  const params = [hiveId];
+
+  if (startDate && endDate) {
+    sql += " AND inspectionDate BETWEEN ? AND ?";
+    params.push(startDate, endDate);
+  }
+
+  db.query(sql, [hiveId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+});
 
 module.exports = router;
