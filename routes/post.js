@@ -102,7 +102,7 @@ router.post("/newCommand", (req, res) => {
 
 router.post("/inspections", (req, res) => {
   const { hiveId, inspectionDate, inspectionTypeId, notes } = req.body;
-  const sql = "INSERT INTO Inspections (hiveId, inspectionDate, inspectionTypeId, notes) VALUES (?, ?, ?)";
+  const sql = "INSERT INTO Inspections (hiveId, inspectionDate, inspectionTypeId, notes) VALUES (?, ?, ?, ?)";
   db.query(sql, [hiveId, inspectionDate, inspectionTypeId, notes], (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
