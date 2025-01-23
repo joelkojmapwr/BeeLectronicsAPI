@@ -18,8 +18,16 @@ router.get("/hives", (req, res) => {
 
 router.get("/hives/:beeViceId/sensorReads", (req, res) => {
   const { beeViceId } = req.params;
-  const sql = "SELECT * FROM SensorReads WHERE beeViceId = ?";
-  db.query(sql, [beeViceId], (err, results) => {
+  const { startDate, endDate } = req.query;
+  let sql = "SELECT * FROM SensorReads WHERE beeViceId = ?";
+  const params = [beeViceId];
+
+  if (startDate && endDate) {
+    sql += " AND createdAt BETWEEN ? AND ?";
+    params.push(startDate, endDate);
+  }
+
+  db.query(sql, params, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }

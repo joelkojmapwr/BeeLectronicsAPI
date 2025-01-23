@@ -25,6 +25,7 @@ CREATE OR REPLACE TABLE BeeVice (
 CREATE OR REPLACE TABLE Hives (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     ownerId INT NOT NULL,
+    customId VARCHAR(100),
     beeViceId INT,
     queenColor ENUM('white', 'yellow', 'red', 'green', 'blue'),
     breed VARCHAR(100),
@@ -80,6 +81,37 @@ CREATE OR REPLACE TABLE Commands (
     possibleParams JSON
 );
 
+CREATE OR REPLACE TABLE InspectionTypes (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    type VARCHAR(50) NOT NULL
+);
+
+CREATE OR REPLACE TABLE Inspections (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    hiveId INT NOT NULL,
+    inspectionTypeId INT NOT NULL,
+    params JSON,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT hiveIdInspections FOREIGN KEY (hiveId) REFERENCES Hives(id),
+    CONSTRAINT inspectionTypeIdInspections FOREIGN KEY (inspectionTypeId) REFERENCES InspectionTypes(id)
+);
+
+CREATE OR REPLACE VIEW sensorReadsView AS
+SELECT Hives.ownerId, Hives.id AS hiveId, Hives.queenColor, Hives.breed, Hives.location, 
+SensorReads.sensorType AS sensorTypeId, SensorReads.value, SensorReads.createdAt, Sensors.type AS sensorType FROM Hives
+JOIN SensorReads ON Hives.beeViceId = SensorReads.beeViceId
+JOIN Sensors ON SensorReads.sensorType = Sensors.id;
+
+CREATE OR REPLACE VIEW beeViceLogsView AS
+SELECT Hives.customId, logs.beeViceId, logs.batteryLevel, logs.additionalMessage, logs.createdAt FROM BeeViceLogs AS logs
+JOIN Hives ON logs.beeViceId = Hives.beeViceId;
+
+CREATE OR REPLACE VIEW inspectionView AS
+SELECT Hives.customId, Inspections.createdAt, InspectionTypes.type, Inspections.params FROM Inspections
+JOIN Hives ON Inspections.hiveId = Hives.id
+JOIN InspectionTypes ON Inspections.inspectionTypeId = InspectionTypes.id;
+
 INSERT INTO Commands (command, possibleParams) VALUES 
 ('WIFI_CHANGE', '{"ssid": "string", "password": "string"}'),
 ('WAKEUP_CHANGE', '{"wakeUpTimes": "int[] - in seconds"}');
@@ -100,8 +132,6 @@ BEGIN
         IF getCommandNameById(NEW.commandId) = 'WAKEUP_CHANGE' THEN
             UPDATE BeeVice SET wakeUpTimes = NEW.params WHERE id = NEW.beeViceId;
         END IF;
-        DELETE FROM queuedCommands WHERE id = NEW.id;
-
     END IF;
 END$$
 DELIMITER ;
