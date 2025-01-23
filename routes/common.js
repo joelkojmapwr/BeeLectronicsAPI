@@ -16,3 +16,5 @@ router.get("/queuedCommands/:beeViceId", (req, res) => {
         res.status(200).json(results);
     });
 });
+
+module.exports = router;
