@@ -1,7 +1,9 @@
 const express = require("express");
 //const bodyParser = require("body-parser");
 require("dotenv").config();
-require("./logger/logger.js");
+const logger = require("./logger/logger.js");
+
+logger.initializeLogger("ClientAPI.log");
 
 // Initialize app and middleware
 const app = express();

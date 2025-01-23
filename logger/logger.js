@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const logFile = path.join(__dirname, 'app.log');
-const logStream = fs.createWriteStream(logFile, { flags: 'a' });
+let logStream = fs.createWriteStream(logFile, { flags: 'a' });
 
+function initializeLogger(logFilePath) {
+  const logFile = path.resolve(logFilePath);
+  logStream = fs.createWriteStream(logFile, { flags: 'a' });
+}
 function getTimeStamp() {
   return new Date().toISOString();
 }
@@ -17,3 +20,5 @@ console.error = function (message) {
   logStream.write(`[${getTimeStamp()}] ERROR: ${message}\n`);
   process.stderr.write(`[${getTimeStamp()}] ERROR: ${message}\n`);
 };
+
+module.exports = {initializeLogger};
