@@ -17,9 +17,12 @@ app.use(express.json());
 const postRouter = require("./routes/post");
 const getRouter = require("./routes/get");
 const updateRouter = require("./routes/update");
+const commonRouter = require("./routes/common");
+
 app.use(getRouter);
 app.use(postRouter);
 app.use(updateRouter);
+app.use(commonRouter);
 
 
 // Start the server

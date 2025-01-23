@@ -12,7 +12,7 @@ app.use(express.json());
 // API Endpoints
 
 //const getRouter = require("./routes/get");
-const beeViceRouter = require("./BeeVice/BeeViceRoutes.js");
+const beeViceRouter = require("./routes/BeeViceRoutes.js");
 app.use(beeViceRouter);
 
 // Start the server
