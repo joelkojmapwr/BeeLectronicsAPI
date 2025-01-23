@@ -90,8 +90,8 @@ CREATE OR REPLACE TABLE Inspections (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     hiveId INT NOT NULL,
     inspectionTypeId INT NOT NULL,
-    params JSON,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    inspectionDate DATE,
 
     CONSTRAINT hiveIdInspections FOREIGN KEY (hiveId) REFERENCES Hives(id),
     CONSTRAINT inspectionTypeIdInspections FOREIGN KEY (inspectionTypeId) REFERENCES InspectionTypes(id)
@@ -121,6 +121,13 @@ INSERT INTO Sensors (type) VALUES
 ('Humidity'),
 ('Weight'),
 ('Frequency');
+
+INSERT INTO InspectionTypes (type) VALUES 
+('Queen Removal'),
+('Feeding'),
+('Medical Treatment'),
+('Honey Harvesting'),
+('Other');
 
 DELIMITER $$
 CREATE OR REPLACE TRIGGER executedCommand AFTER UPDATE ON queuedCommands

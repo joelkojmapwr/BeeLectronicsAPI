@@ -30,6 +30,17 @@ router.put("/queuedCommands/:id/executed", (req, res) => {
     });
 });
 
+router.delete("/queuedCommands/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM queuedCommands WHERE id = ? AND executed = 1";
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json({ message: "Command deleted successfully" });
+    });
+});
+
 
 router.post("/sensorReads", (req, res) => {
     const { beeViceId, sensorType, value } = req.body;

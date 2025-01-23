@@ -100,4 +100,15 @@ router.post("/newCommand", (req, res) => {
   });
 });
 
+router.post("/inspections", (req, res) => {
+  const { hiveId, inspectionDate, type, notes } = req.body;
+  const sql = "INSERT INTO Inspections (hiveId, inspectionDate, type, notes) VALUES (?, ?, ?)";
+  db.query(sql, [hiveId, inspectionDate, type, notes], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: "Inspection added successfully", inspectionId: result.insertId });
+  });
+});
+
 module.exports = router;

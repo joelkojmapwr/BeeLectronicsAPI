@@ -26,7 +26,7 @@ Content-Type: application/json
     "value": "29.5"
 }
 
-POST http://localhost:3000/beeViceLogs HTTP/1.1
+POST srv77343.seohost.com.pl/beeViceLogs HTTP/1.1
 Content-Type: application/json
 
 {
@@ -34,8 +34,6 @@ Content-Type: application/json
     "batteryLevel": "60.2",
     "additionalMessage": "Test__ BeeVice is online"
 }
-
-GET http://localhost:3000/sensorTypes HTTP/1.1
 
 GET srv77343.seohost.com.pl/sensorTypes HTTP/1.1
 
@@ -96,3 +94,13 @@ PUT http://srv77343.seohost.com.pl/queuedCommands/1/executed HTTP/1.1
 Content-Type: application/json
 
 GET http://srv77343.seohost.com.pl/hives/1/sensorReads?startDate=2025-01-21%2000:00:00&endDate=2025-01-31%2023:59:59 HTTP/1.1
+
+POST http://srv77343.seohost.com.pl/inspections HTTP/1.1
+Content-Type: application/json
+
+{
+    "hiveId": "1",
+    "inspectionDate": "2025-01-21",
+    "inspectionType": "1",
+    "additionalMessage": "Test__ BeeHive is healthy"
+}
