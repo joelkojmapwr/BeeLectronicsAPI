@@ -2,6 +2,7 @@ require("../logger/logger.js");
 
 const express = require("express");
 const router = express.Router();
+const db = require("../db/db.js");
 
 router.patch("/hives/:id/addBeeVice", (req, res) => {
     const { id } = req.params;
