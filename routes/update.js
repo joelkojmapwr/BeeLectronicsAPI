@@ -27,4 +27,29 @@ router.put("/hives/:id/updateHive", (req, res) => {
     });
 });
 
+router.put("/queuedCommands/:id/executed", (req, res) => {
+    const { id } = req.params;
+    const sql = "UPDATE queuedCommands SET executed = 1 WHERE id = ?";
+    db.beginTransaction((err) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        db.query(sql, [id], (err, result) => {
+            if (err) {
+                return db.rollback(() => {
+                    res.status(500).json({ error: err.message });
+                });
+            }
+            db.commit((err) => {
+                if (err) {
+                    return db.rollback(() => {
+                        res.status(500).json({ error: err.message });
+                    });
+                }
+                res.status(200).json({ message: "Command executed successfully" });
+            });
+        });
+    });
+});
+
 module.exports = router;

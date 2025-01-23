@@ -55,7 +55,7 @@ CREATE OR REPLACE TABLE SensorReads(
 CREATE OR REPLACE TABLE BeeViceLogs (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     beeViceId INT NOT NULL,
-    batteryLevel FLOAT NOT NULL,
+    batteryLevel FLOAT,
     additionalMessage TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -90,3 +90,21 @@ INSERT INTO Sensors (type) VALUES
 ('Weight'),
 ('Frequency');
 
+DELIMITER $$
+CREATE OR REPLACE TRIGGER executedCommand AFTER UPDATE ON queuedCommands
+FOR EACH ROW
+BEGIN
+    IF NEW.executed = TRUE THEN
+
+        INSERT INTO BeeViceLogs (beeViceId, additionalMessage) VALUES (NEW.beeViceId, 'Command ' + NEW.commandId + ' executed with params ' + NEW.params);
+        IF getCommandNameById(NEW.commandId) = 'WAKEUP_CHANGE' THEN
+            UPDATE BeeVice SET wakeUpTimes = NEW.params WHERE id = NEW.beeViceId;
+        END IF;
+        DELETE FROM queuedCommands WHERE id = NEW.id;
+
+    END IF;
+END$$
+DELIMITER ;
+
+CREATE OR REPLACE FUNCTION getCommandNameById(commandId INT) RETURNS VARCHAR(50)
+RETURN (SELECT command FROM Commands WHERE id = commandId);
