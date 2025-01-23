@@ -30,7 +30,7 @@ db.on("error", (err) => {
   console.error("Database error:", err.message);
 //  if (err.code === "PROTOCOL_CONNECTION_LOST") {
     console.log("Attempting to reconnect to the database...");
-    handleDisconnect();
+    tryToConnect(db);
   //}
 });
 
