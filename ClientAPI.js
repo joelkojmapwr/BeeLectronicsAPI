@@ -18,11 +18,13 @@ const postRouter = require("./routes/post");
 const getRouter = require("./routes/get");
 const updateRouter = require("./routes/update");
 const commonRouter = require("./routes/common");
+const beeBiceRouter = require("./routes/BeeViceRoutes");
 
 app.use(getRouter);
 app.use(postRouter);
 app.use(updateRouter);
 app.use(commonRouter);
+app.use(beeBiceRouter);
 
 
 // Start the server
