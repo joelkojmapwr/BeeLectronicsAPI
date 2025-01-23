@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-let logStream = fs.createWriteStream(logFile, { flags: 'a' });
+let logStream;
 
 function initializeLogger(logFilePath) {
   const logFile = path.resolve(logFilePath);
